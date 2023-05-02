@@ -1,3 +1,40 @@
 @startuml
-class Instrumento
+abstract Instrumento {
+-{field} nombre: String
+-{field} material: String
++{method} getNombre(): String
++{method} getMaterial(): String
+}
+class Cuerda {
+-{field} tipoCuerda: String
+-{field} n°cuerdas: int
+-{field} tipo: String
++{method} Cuerda(nombre: String, material, String,\ntipoCuerda: String, n°cuerdas: int,\ntipo: String)
++{method} getTipoCuerda(): String
++{method} getN°cuerdas(): INT
++{method} getTipo(): String
+}
+class Percusion {
+-{field} tipoPercusion: String
+-{field} altura: float
++{method} Percusion(nombre: String, material: String,\ntipoPercusion: String, altura: float)
++{method} getTipoPercusion(): String
++{method} getAltura(): float
+}
+class Viento {
++{method} Viento(nombre: String, material: String)
+}
+interface Sistema {
++{field} agregarInstrumento(): void
++{field} venderInstrumento(): void
++{field} consultarInventario(): void
+}
+class SistemaImpl {
+}
+SistemaImpl --|> Sistema
+Cuerda --|> Instrumento
+Percusion --|> Instrumento
+Viento --|> Instrumento
+
+
 @enduml
