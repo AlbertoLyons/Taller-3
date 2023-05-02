@@ -1,0 +1,2 @@
+Cuerda,Guitarra,acero,6,madera,electrico
+Percusion,Bombo,idiofono,piel,indefinida

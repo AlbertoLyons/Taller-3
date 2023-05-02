@@ -2,14 +2,15 @@
 abstract Instrumento {
 -{field} nombre: String
 -{field} material: String
++{method} Instrumento(nombre: String, material: String)
 +{method} getNombre(): String
 +{method} getMaterial(): String
 }
 class Cuerda {
 -{field} tipoCuerda: String
--{field} n°cuerdas: int
+-{field} n_cuerdas: int
 -{field} tipo: String
-+{method} Cuerda(nombre: String, material, String,\ntipoCuerda: String, n°cuerdas: int,\ntipo: String)
++{method} Cuerda(nombre: String, material, String,\ntipoCuerda: String, n_cuerdas: int,\ntipo: String)
 +{method} getTipoCuerda(): String
 +{method} getN°cuerdas(): INT
 +{method} getTipo(): String
@@ -24,6 +25,15 @@ class Percusion {
 class Viento {
 +{method} Viento(nombre: String, material: String)
 }
+class ListaInstrumentos {
+-{field} max: int
+-{field} tamanio: int
+-{field} Instrumento ListaInstrumentos[]
++{method} ListaInstrumentos(max: int)
++{method} agregarInstrumento(Instrumento instrumento)
++{method} buscarInstrumento(Instrumento instrumento)
++{method} eliminarInstrumento(Instrumento instrumento)
+}
 interface Sistema {
 +{field} agregarInstrumento(): void
 +{field} venderInstrumento(): void
@@ -31,10 +41,12 @@ interface Sistema {
 }
 class SistemaImpl {
 }
-SistemaImpl --|> Sistema
-Cuerda --|> Instrumento
-Percusion --|> Instrumento
-Viento --|> Instrumento
+SistemaImpl "1" --|> "1   " Sistema
+Cuerda  --|>  Instrumento
+Percusion  --|>  Instrumento
+Viento  --|>  Instrumento
+Sistema "1" --> "1   " ListaInstrumentos : Administra
+Instrumento "*" --o "1" ListaInstrumentos : Almacena
 
 
 @enduml
