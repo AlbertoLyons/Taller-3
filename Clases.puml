@@ -41,11 +41,11 @@ interface Sistema {
 }
 class SistemaImpl {
 }
-SistemaImpl "1" --|> "1   " Sistema
+Sistema "1  " <|.. "1  " SistemaImpl
 Cuerda  --|>  Instrumento
 Percusion  --|>  Instrumento
 Viento  --|>  Instrumento
-Sistema "1" --> "1   " ListaInstrumentos : Administra
+SistemaImpl "1" --> "1   " ListaInstrumentos : Administra
 Instrumento "*" --o "1" ListaInstrumentos : Almacena
 
 
