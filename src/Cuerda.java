@@ -1,13 +1,13 @@
 public class Cuerda extends Instrumento {
     private String tipoCuerda;
-    private int n_cuerdas;
+    private int numCuerdas;
     private String tipo; //Acustico o electrico
 
 
-    public Cuerda(String nombre, String material, String tipoCuerda, int n_cuerdas, String tipo) {
+    public Cuerda(String nombre, String material, String tipoCuerda, int numCuerdas, String tipo) {
         super(nombre, material);
         this.tipoCuerda = tipoCuerda;
-        this.n_cuerdas = n_cuerdas;
+        this.numCuerdas = numCuerdas;
         this.tipo = tipo;
     }
 
@@ -15,8 +15,8 @@ public class Cuerda extends Instrumento {
         return tipoCuerda;
     }
 
-    public int getN_cuerdas() {
-        return n_cuerdas;
+    public int getNumCuerdas() {
+        return numCuerdas;
     }
 
     public String getTipo() {

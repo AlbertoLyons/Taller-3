@@ -8,11 +8,11 @@ abstract Instrumento {
 }
 class Cuerda {
 -{field} tipoCuerda: String
--{field} n_cuerdas: int
+-{field} numCuerdas: int
 -{field} tipo: String
-+{method} Cuerda(nombre: String, material, String,\ntipoCuerda: String, n_cuerdas: int,\ntipo: String)
++{method} Cuerda(nombre: String, material, String,\ntipoCuerda: String, numCcuerdas: int,\ntipo: String)
 +{method} getTipoCuerda(): String
-+{method} getN°cuerdas(): INT
++{method} getNumCuerdas(): int
 +{method} getTipo(): String
 }
 class Percusion {
@@ -35,11 +35,13 @@ class ListaInstrumentos {
 +{method} eliminarInstrumento(Instrumento instrumento)
 }
 interface Sistema {
++{field} menuPrincipal(): void
 +{field} agregarInstrumento(): void
 +{field} venderInstrumento(): void
 +{field} consultarInventario(): void
 }
 class SistemaImpl {
++{field}listaInstrumentosImpl: ListaInstrumentos
 }
 Sistema "1  " <|.. "1  " SistemaImpl
 Cuerda  --|>  Instrumento

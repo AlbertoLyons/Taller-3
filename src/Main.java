@@ -8,25 +8,7 @@ public class Main {
 
         SistemaImpl sistema = new SistemaImpl();
         sistema.leerArchivo();
-
-        String opcion = "";
-        while (!opcion.equals("6")){
-
-            StdOut.println("""
-                    
-                    [*] Beat the Rhythm
-                    
-                    [1] Agregar Instrumento
-                    [2] Vender Instrumento
-                    [3] Consultar Inventario
-                    [4] Salir
-                    
-                    """);
-
-            StdOut.print("Escoja una opcion: ");
-            opcion =  StdIn.readString();
-
-        }
+        sistema.menuPrincipal();
         
     }
 }
