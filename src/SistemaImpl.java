@@ -1,7 +1,4 @@
-import ucn.ArchivoEntrada;
-import ucn.Registro;
-import ucn.StdIn;
-import ucn.StdOut;
+import ucn.*;
 
 import java.io.IOException;
 
@@ -13,12 +10,11 @@ public class SistemaImpl implements Sistema{
         listaInstrumentosImpl = new ListaInstrumentos(100);
         this.contInstrumentos = 0;
     }
-    public void menuPrincipal() {
+    public void menuPrincipal() throws IOException {
         String opcion = "";
         while (!opcion.equals("4")){
 
-            StdOut.println("""
-                   
+            StdOut.print("""
                     [*] Beat the Rhythm
                     
                     [1] Agregar Instrumento
@@ -29,6 +25,7 @@ public class SistemaImpl implements Sistema{
                     """);
 
             StdOut.print("Escoja una opcion: ");
+            StdOut.println("");
             opcion =  StdIn.readString();
             switch (opcion){
                 case "1" -> this.agregarInstrumentoMenu();
@@ -93,17 +90,27 @@ public class SistemaImpl implements Sistema{
     }
 
     @Override
-    public void agregarInstrumentoMenu() {
+    public void agregarInstrumentoMenu() throws IOException {
 
         String instrumentoAux = "";
         Instrumento instrumentoPorAgregar = new Viento("error","error");
 
-        StdOut.println("Seleccione un instrumento: \n1. Cuerda\n2. Percusion\n3. Viento");
+        StdOut.print("""
+                    [*] Seleccione un instrumento
+                    
+                    [1] Cuerda
+                    [2] Percusion
+                    [3] Viento
+            
+                    """);
+
+        StdOut.print("Escriba el nombre del tipo de instrumento: ");
         instrumentoAux = StdIn.readString();
+
 
         // Agregar instrumento en caso de ser de cuerda.
         if (instrumentoAux.equalsIgnoreCase("Cuerda")){
-            StdOut.println("Ingrese el instrumento (Guitarra, Bajo, Violin, Arpa)");
+            StdOut.println("Ingrese el instrumento (Guitarra, Bajo, Violin, Arpa): ");
             String nombreInstrumentoCuerda = StdIn.readString();
 
             if (!nombreInstrumentoCuerda.equalsIgnoreCase("Guitarra") || !nombreInstrumentoCuerda.equalsIgnoreCase("Bajo") || !nombreInstrumentoCuerda.equalsIgnoreCase("Violin") || !nombreInstrumentoCuerda.equalsIgnoreCase("Arpa")){
@@ -195,21 +202,28 @@ public class SistemaImpl implements Sistema{
         }
         // Agregar instrumento en caso de ser de viento.
         else if (instrumentoAux.equalsIgnoreCase("Viento")){
-            StdOut.print("Ingrese el instrumento (Trompeta, Saxofón, Clarinete, Flauta traversa)");
+            StdOut.print("Ingrese el instrumento (Trompeta, Saxofón, Clarinete, Flauta traversa): ");
             String nombreInstrumentoViento = StdIn.readString();
 
-            if (!nombreInstrumentoViento.equalsIgnoreCase("Trompeta") || !nombreInstrumentoViento.equalsIgnoreCase("Saxofón") || !nombreInstrumentoViento.equalsIgnoreCase("Clarinete") || !nombreInstrumentoViento.equalsIgnoreCase("Flauta traversa")){
+            if (nombreInstrumentoViento.equalsIgnoreCase("Trompeta") || nombreInstrumentoViento.equalsIgnoreCase("Saxofón") || nombreInstrumentoViento.equalsIgnoreCase("Clarinete") || nombreInstrumentoViento.equalsIgnoreCase("Flauta traversa")){
+
+                StdOut.print("Ingrese el material del instrumento (Madera, Metal): ");
+                String tipoMaterial = StdIn.readString();
+
+                if (tipoMaterial.equalsIgnoreCase("Madera") || tipoMaterial.equalsIgnoreCase("Metal")) {
+
+                    instrumentoPorAgregar = new Viento(nombreInstrumentoViento,tipoMaterial);
+                }else {
+                    StdOut.println("El tipo de material ingresado no es valido.");
+                    return;
+                }
+
+            }else {
                 StdOut.println("El instrumento ingresado no es valido.");
                 return;
             }
-            StdOut.print("Ingrese el material del instrumento (Madera, Metal): ");
-            String tipoMaterial = StdIn.readString();
-            if (!tipoMaterial.equalsIgnoreCase("Madera") || !tipoMaterial.equalsIgnoreCase("Metal")) {
-                StdOut.println("El tipo de material ingresado no es valido.");
-                return;
-            }
 
-            instrumentoPorAgregar = new Viento(nombreInstrumentoViento,tipoMaterial);
+
 
         }else {
             StdOut.println("No fue posible agregar el instrumento.");
@@ -220,7 +234,63 @@ public class SistemaImpl implements Sistema{
             StdOut.println("El instrumento no fue agregado");
             return;
         }
+
         listaInstrumentosImpl.agregarInstrumento(instrumentoPorAgregar);
+
+        if (this.sobreescribirArchivo(instrumentoAux,instrumentoPorAgregar)){
+            StdOut.println("Instrumento agregado con exito.");
+            StdOut.println("");
+            this.contInstrumentos++;
+        }else {
+            StdOut.println("No fue posible agregar el instrumento.");
+        }
+
+    }
+
+    @Override
+    public boolean sobreescribirArchivo(String instrumentoString, Instrumento instrumento) throws IOException {
+
+        ArchivoSalida archSal = new ArchivoSalida("instrumentos.txt");
+        Registro regSal;
+
+        if (instrumento instanceof Cuerda && instrumentoString.equalsIgnoreCase("Cuerda")){
+
+            regSal = new Registro(6);
+            regSal.agregarCampo(instrumentoString);
+            regSal.agregarCampo(instrumento.getNombre());
+            regSal.agregarCampo(((Cuerda) instrumento).getTipoCuerda());
+            regSal.agregarCampo(((Cuerda) instrumento).getNumCuerdas());
+            regSal.agregarCampo(instrumento.getMaterial());
+            regSal.agregarCampo(((Cuerda) instrumento).getTipo());
+            archSal.writeRegistro(regSal);
+            archSal.close();
+            return true;
+
+        } else if (instrumento instanceof Percusion && instrumentoString.equalsIgnoreCase("Percusion")) {
+
+            regSal = new Registro(5);
+            regSal.agregarCampo(instrumentoString);
+            regSal.agregarCampo(instrumento.getNombre());
+            regSal.agregarCampo(((Percusion) instrumento).getPercusion());
+            regSal.agregarCampo(instrumento.getMaterial());
+            regSal.agregarCampo(((Percusion) instrumento).getAltura());
+            archSal.writeRegistro(regSal);
+            archSal.close();
+            return true;
+
+        } else if (instrumento instanceof Viento && instrumentoString.equalsIgnoreCase("Viento")) {
+
+            regSal = new Registro(3);
+            regSal.agregarCampo(instrumentoString);
+            regSal.agregarCampo(instrumento.getNombre());
+            regSal.agregarCampo(instrumento.getMaterial());
+            archSal.writeRegistro(regSal);
+            archSal.close();
+            return true;
+
+        }else {
+            return false;
+        }
     }
 
     @Override

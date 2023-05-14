@@ -8,4 +8,12 @@ public class Percusion extends Instrumento{
         this.altura = altura;
 
     }
+
+    public String getPercusion() {
+        return percusion;
+    }
+
+    public String getAltura() {
+        return altura;
+    }
 }
