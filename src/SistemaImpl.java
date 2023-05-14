@@ -96,11 +96,11 @@ public class SistemaImpl implements Sistema{
         Instrumento instrumentoPorAgregar = new Viento("error","error");
 
         StdOut.print("""
-                    [*] Seleccione un instrumento
+                    [*] Seleccione el tipo de instrumento
                     
-                    [1] Cuerda
-                    [2] Percusion
-                    [3] Viento
+                    [*] Cuerda
+                    [*] Percusion
+                    [*] Viento
             
                     """);
 
@@ -113,52 +113,70 @@ public class SistemaImpl implements Sistema{
             StdOut.println("Ingrese el instrumento (Guitarra, Bajo, Violin, Arpa): ");
             String nombreInstrumentoCuerda = StdIn.readString();
 
-            if (!nombreInstrumentoCuerda.equalsIgnoreCase("Guitarra") || !nombreInstrumentoCuerda.equalsIgnoreCase("Bajo") || !nombreInstrumentoCuerda.equalsIgnoreCase("Violin") || !nombreInstrumentoCuerda.equalsIgnoreCase("Arpa")){
+
+            // Validacion del instrumento.
+            if (nombreInstrumentoCuerda.equalsIgnoreCase("Guitarra") || nombreInstrumentoCuerda.equalsIgnoreCase("Bajo") || nombreInstrumentoCuerda.equalsIgnoreCase("Violin") || nombreInstrumentoCuerda.equalsIgnoreCase("Arpa")){
+
+                StdOut.println("Ingrese el tipo de cuerda (Nylon, Acero, Tripa): ");
+                String tipoCuerda = StdIn.readString();
+
+                // Validacion del tipo de cuerda.
+                if (tipoCuerda.equalsIgnoreCase("Nylon") || tipoCuerda.equalsIgnoreCase("Acero") || tipoCuerda.equalsIgnoreCase("Tripa")) {
+
+                    int numCuerdas;
+                    // Validacion que el numero de cuerdas sea valido.
+                    while (true) {
+                        try {
+                            StdOut.println("Ingrese el numero de cuerdas: ");
+                            String numCuerdasString = StdIn.readString();
+                            numCuerdas = Integer.parseInt(numCuerdasString);
+
+                            if (numCuerdas <= 0) {
+                                StdOut.println("Ingrese un numero valido(que este sea mayor que 0).");
+                                return;
+                            }else {
+                                break;
+                            }
+
+                        } catch (Exception e) {
+                            StdOut.println("Ingrese un numero valido.");
+                        }
+                    }
+
+                    StdOut.print("Ingrese el material del instrumento (Madera, Metal): ");
+                    String tipoMaterial = StdIn.readString();
+
+                    // Validacion del material.
+                    if (tipoMaterial.equalsIgnoreCase("Madera") || tipoMaterial.equalsIgnoreCase("Metal")) {
+
+                        StdOut.print("Ingrese el tipo del instrumento (Acústico, Eléctrico): ");
+                        String tipoInstrumento = StdIn.readString();
+
+                        // Validacion del tipo del instrumento.
+                        if (tipoInstrumento.equalsIgnoreCase("Acústico") || tipoInstrumento.equalsIgnoreCase("Eléctrico")) {
+
+                            // Si pasa todas las validaciones se actualiza el valor de la variable instrumentoPorAgregar
+                            instrumentoPorAgregar = new Cuerda(nombreInstrumentoCuerda,tipoMaterial,tipoCuerda,numCuerdas,tipoInstrumento);
+
+                        }else {
+                            StdOut.println("El tipo de instrumento ingresado no es valido.");
+                            return;
+                        }
+
+                    }else {
+                        StdOut.println("El tipo de material ingresado no es valido.");
+                        return;
+                    }
+
+                }else {
+                    StdOut.println("El tipo de cuerda no es valido");
+                    return;
+                }
+
+            }else {
                 StdOut.println("El instrumento ingresado no es valido.");
                 return;
             }
-
-            StdOut.println("Ingrese el tipo de cuerda (Nylon, Acero, Tripa): ");
-            String tipoCuerda = StdIn.readString();
-            if (!tipoCuerda.equalsIgnoreCase("Nylon") || !tipoCuerda.equalsIgnoreCase("Acero") || !tipoCuerda.equalsIgnoreCase("Tripa")) {
-                StdOut.println("El tipo de cuerda no es valido");
-                return;
-            }
-
-            int numCuerdas;
-            while (true) {
-                try {
-                    StdOut.println("Ingrese el numero de cuerdas: ");
-                    String numCuerdasString = StdIn.readString();
-                    numCuerdas = Integer.parseInt(numCuerdasString);
-
-                    if (numCuerdas <= 0) {
-                        StdOut.println("Ingrese un numero valido");
-                        return;
-                    }else {
-                        break;
-                    }
-
-
-                } catch (Exception e) {
-                    StdOut.println("Ingrese un numero valido");
-                }
-            }
-
-            StdOut.print("Ingrese el material del instrumento (Madera, Metal): ");
-            String tipoMaterial = StdIn.readString();
-            if (!tipoMaterial.equalsIgnoreCase("Madera") || !tipoMaterial.equalsIgnoreCase("Metal")) {
-                StdOut.println("El tipo de material ingresado no es valido.");
-                return;
-            }
-            StdOut.print("Ingrese el tipo del instrumento (Acústico, Eléctrico): ");
-            String tipoInstrumento = StdIn.readString();
-            if (!tipoInstrumento.equalsIgnoreCase("Acústico") || !tipoInstrumento.equalsIgnoreCase("Eléctrico")) {
-                StdOut.println("El tipo de instrumento ingresado no es valido.");
-                return;
-            }
-            // Se agrega el instrumento con los datos dados
-            instrumentoPorAgregar = new Cuerda(nombreInstrumentoCuerda,tipoMaterial,tipoCuerda,numCuerdas,tipoInstrumento);
         }
         // Agregar instrumento en caso de ser de percusion.
         else if (instrumentoAux.equalsIgnoreCase("Percusion")){
@@ -166,52 +184,66 @@ public class SistemaImpl implements Sistema{
             StdOut.print("Ingrese el instrumento (Bongó, Cajón, Campanas Tubulares, Bombo): ");
             String nombreInstrumentoPercusion = StdIn.readString();
 
-            // Validacion por si el instrumento ingresado no es uno de los admitidos.
-            if (!nombreInstrumentoPercusion.equalsIgnoreCase("Bongó") || !nombreInstrumentoPercusion.equalsIgnoreCase("Cajón") || !nombreInstrumentoPercusion.equalsIgnoreCase("Campanas Tubulares") || !nombreInstrumentoPercusion.equalsIgnoreCase("Bombo")){
+            // Validacion del instrumento
+            if (nombreInstrumentoPercusion.equalsIgnoreCase("Bongó") || nombreInstrumentoPercusion.equalsIgnoreCase("Cajón") || nombreInstrumentoPercusion.equalsIgnoreCase("Campanas Tubulares") || nombreInstrumentoPercusion.equalsIgnoreCase("Bombo")){
+
+                StdOut.print("Ingrese el tipo de percusion(Membranófono, idiófono): ");
+                String tipoPercusion =  StdIn.readString();
+
+                // Validacion del tipo de percusion.
+                if (tipoPercusion.equalsIgnoreCase("Membranófono") || tipoPercusion.equalsIgnoreCase("Idiófono")){
+
+                    StdOut.print("Ingrese el material de construccion del instrumento(Madera, metal, piel): ");
+                    String materialInstrumento = StdIn.readString();
+
+                    // Validacion del material de construccion.
+                    if (materialInstrumento.equalsIgnoreCase("Madera") || materialInstrumento.equalsIgnoreCase("Metal") || materialInstrumento.equalsIgnoreCase("Piel")){
+
+                        StdOut.print("Ingrese el tipo de altura(definida, indefinida): ");
+                        String altura = StdIn.readString();
+
+                        // Validacion del tipo de altura
+                        if (altura.equalsIgnoreCase("Definida") || altura.equalsIgnoreCase("Indefinida")){
+
+                            // Si pasa todas las validaciones se actualiza el valor de la variable instrumentoPorAgregar
+                            instrumentoPorAgregar = new Percusion(nombreInstrumentoPercusion,materialInstrumento,tipoPercusion,altura);
+
+                        }else {
+                            StdOut.println("El tipo de altura ingresada no es valida");
+                            return;
+                        }
+
+                    }else {
+                        StdOut.println("El tipo de material ingresado no es valido.");
+                        return;
+                    }
+
+                }else {
+                    StdOut.println("El tipo de instrumento ingresado no es valido.");
+                    return;
+                }
+
+            }else {
                 StdOut.println("El instrumento ingresado no es valido.");
                 return;
             }
-
-            StdOut.print("Ingrese el tipo de percusion(Membranófono, idiófono): ");
-            String tipoPercusion =  StdIn.readString();
-
-            // Validacion por si el tipo de percusion ingresada no es parte de los admitidos.
-            if (!tipoPercusion.equalsIgnoreCase("Membranófono") || !tipoPercusion.equalsIgnoreCase("Idiófono")){
-                StdOut.println("El tipo de instrumento ingresado no es valido.");
-                return;
-            }
-
-            StdOut.print("Ingrese el material de construccion del instrumento(Madera, metal, piel): ");
-            String materialInstrumento = StdIn.readString();
-
-            if (!materialInstrumento.equalsIgnoreCase("Madera") || !materialInstrumento.equalsIgnoreCase("Metal") || !materialInstrumento.equalsIgnoreCase("Piel")){
-                StdOut.println("El tipo de material ingresado no es valido.");
-                return;
-            }
-
-            StdOut.print("Ingrese el tipo de altura(definida, indefinida): ");
-            String altura = StdIn.readString();
-
-            if (!altura.equalsIgnoreCase("Definida") || !altura.equalsIgnoreCase("Indefinida")){
-                StdOut.println("El tipo de altura ingresada no es valida");
-                return;
-            }
-
-            instrumentoPorAgregar = new Percusion(nombreInstrumentoPercusion,materialInstrumento,tipoPercusion,altura);
-
         }
         // Agregar instrumento en caso de ser de viento.
         else if (instrumentoAux.equalsIgnoreCase("Viento")){
+
             StdOut.print("Ingrese el instrumento (Trompeta, Saxofón, Clarinete, Flauta traversa): ");
             String nombreInstrumentoViento = StdIn.readString();
 
+            // Validacion del instrumento.
             if (nombreInstrumentoViento.equalsIgnoreCase("Trompeta") || nombreInstrumentoViento.equalsIgnoreCase("Saxofón") || nombreInstrumentoViento.equalsIgnoreCase("Clarinete") || nombreInstrumentoViento.equalsIgnoreCase("Flauta traversa")){
 
                 StdOut.print("Ingrese el material del instrumento (Madera, Metal): ");
                 String tipoMaterial = StdIn.readString();
 
+                // Validacion del material del instrumento.
                 if (tipoMaterial.equalsIgnoreCase("Madera") || tipoMaterial.equalsIgnoreCase("Metal")) {
 
+                    // Si pasa todas las validaciones se actualiza el valor de la variable instrumentoPorAgregar
                     instrumentoPorAgregar = new Viento(nombreInstrumentoViento,tipoMaterial);
                 }else {
                     StdOut.println("El tipo de material ingresado no es valido.");
@@ -223,20 +255,22 @@ public class SistemaImpl implements Sistema{
                 return;
             }
 
-
-
         }else {
             StdOut.println("No fue posible agregar el instrumento.");
             return;
         }
 
+        // Ultima validacion por si los valores no fueron actualizados dentro del metodo.
         if (instrumentoPorAgregar.getNombre().equalsIgnoreCase("error")){
             StdOut.println("El instrumento no fue agregado");
             return;
         }
 
-        listaInstrumentosImpl.agregarInstrumento(instrumentoPorAgregar);
+        // Se agrega el instrumento a la lista y se incrementa el contador de instrumentos.
+        this.listaInstrumentosImpl.agregarInstrumento(instrumentoPorAgregar);
+        this.contInstrumentos++;
 
+        /*
         if (this.sobreescribirArchivo(instrumentoAux,instrumentoPorAgregar)){
             StdOut.println("Instrumento agregado con exito.");
             StdOut.println("");
@@ -244,9 +278,11 @@ public class SistemaImpl implements Sistema{
         }else {
             StdOut.println("No fue posible agregar el instrumento.");
         }
+         */
 
     }
 
+    /*
     @Override
     public boolean sobreescribirArchivo(String instrumentoString, Instrumento instrumento) throws IOException {
 
@@ -292,6 +328,7 @@ public class SistemaImpl implements Sistema{
             return false;
         }
     }
+     */
 
     @Override
     public void venderInstrumento() {
