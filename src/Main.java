@@ -1,6 +1,3 @@
-import ucn.StdIn;
-import ucn.StdOut;
-
 import java.io.IOException;
 
 public class Main {

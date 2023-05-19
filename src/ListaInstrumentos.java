@@ -1,17 +1,28 @@
 import ucn.StdOut;
 
 public class ListaInstrumentos {
-
+    /**
+     * The max
+     */
     private int max;
+    /**
+     * The tamanio
+     */
     private int tamanio;
+    /**
+     * The listaInstrumentos[]
+     */
     private Instrumento listaInstrumentos[];
 
+    /**
+     * The constructor
+     * @param max
+     */
     public ListaInstrumentos(int max) {
         this.max = max;
         this.tamanio = 0;
         this.listaInstrumentos = new Instrumento[max];
     }
-
     /**
      * Agrega un instrumento
      *
@@ -28,7 +39,6 @@ public class ListaInstrumentos {
         this.listaInstrumentos[tamanio] = instrumento;
         tamanio++;
     }
-
     /**
      * Busca la posicion del instrumento en base a un instrumento dado.
      *
@@ -65,6 +75,7 @@ public class ListaInstrumentos {
             }
             this.tamanio--;
             return true;
+            // Retornamos true si se elimino
         }
         // Retornamos false si la posicion no fue encontrada.
         return false;
