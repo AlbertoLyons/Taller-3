@@ -23,6 +23,7 @@ public class ListaInstrumentos {
         this.tamanio = 0;
         this.listaInstrumentos = new Instrumento[max];
     }
+
     /**
      * Agrega un instrumento
      *
@@ -31,14 +32,44 @@ public class ListaInstrumentos {
     public void agregarInstrumento(Instrumento instrumento) {
 
         // Validacion por si la lista de instrumentos se encuentra llena.
-        if (tamanio == max) {
+        if (this.tamanio >= this.max) {
             StdOut.println("No se pueden almacenar mas intrumentos!");
             return;
         }
         // Si pasa la validacion se agrega el instrumento y se incrementa el tamanio.
-        this.listaInstrumentos[tamanio] = instrumento;
+        this.listaInstrumentos[this.tamanio] = instrumento;
         tamanio++;
     }
+
+    /**
+     * Entrega el instrumento dada una posicion.
+     *
+     * @param posicion
+     * @return
+     */
+    public Instrumento obtenerInstrumento(int posicion){
+        if(posicion < 0 || posicion >= this.tamanio){
+            return null;
+        }
+        return this.listaInstrumentos[posicion];
+    }
+
+    /**
+     * Devuelve el instrumento dado un codigo.
+     *
+     * @param codigo
+     * @return
+     */
+    public Instrumento obtenerInstrumentoCodigo(int codigo){
+
+        for (int i = 0; i < this.tamanio ; i++) {
+            if (this.listaInstrumentos[i].getCodigo() == codigo){
+                return this.listaInstrumentos[i];
+            }
+        }
+        return null;
+    }
+
     /**
      * Busca la posicion del instrumento en base a un instrumento dado.
      *
@@ -65,6 +96,7 @@ public class ListaInstrumentos {
      * @return
      */
     public boolean eliminarInstrumento(Instrumento instrumento) {
+
         // Buscamos la posicion para eliminarlo
         int posicion = buscarInstrumento(instrumento);
 
@@ -81,4 +113,10 @@ public class ListaInstrumentos {
         return false;
     }
 
+    /**
+     * @return the tamanio.
+     */
+    public int getTamanio() {
+        return tamanio;
+    }
 }
