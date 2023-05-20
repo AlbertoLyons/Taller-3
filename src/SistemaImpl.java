@@ -353,15 +353,40 @@ public class SistemaImpl implements Sistema{
      */
     public void venderInstrumento() {
         StdOut.println("Vender instrumento:");
+        Instrumento instrumentoPorEliminar;
         //Opcional desplegar lista de instrumentos existentes
-        StdOut.println("Ingrese el codigo del instrumento a vender");
-        String codigo = StdIn.readInt();
+        int codigo;
+        while (true) {
+            StdOut.println("Ingrese el codigo del instrumento a vender");
+            String codigoString = StdIn.readString();
+            codigo = Integer.parseInt(codigoString);
+
+            if (codigo <= 0) {
+                StdOut.println("Ingrese un codigo mayor a 0");
+                return;
+            }
+            else {
+                break;
+            }
+        }
 
         for (int i = 0; i < listaInstrumentosImpl.length; i++) {
             if (listaInstrumentosImpl[i].getCodigo() == codigo) {
                 if (listaInstrumentosImpl[i].getStock() > 0) {
+                        instrumentoPorEliminar = listaInstrumentosImpl[i];
+                        int precio = listaInstrumentosImpl[i].getPrecio();
+                        String nombre = listaInstrumentosImpl[i].getNombre();
 
+                    //Arreglar
 
+                    if (ListaInstrumentos.eliminarInstrumento(instrumentoPorEliminar)) {
+                        StdOut.println("Instrumento vendido con exito!");
+
+                        StdOut.println("Boleta:\nInstrumento vendido: " + nombre + "Precio: " + precio);
+                    }
+                    else {
+                        StdOut.println("Ocurrio un error. Intentelo nuevamente");
+                    }
                 }
                 else {
                     StdOut.println("El instrumento solicitado no tiene stock disponible");
@@ -370,6 +395,7 @@ public class SistemaImpl implements Sistema{
             }
             else {
                 StdOut.println("No se encontro el codigo");
+                return;
             }
         }
 
