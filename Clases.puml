@@ -1,4 +1,7 @@
 @startuml
+
+left to right direction
+
 abstract Instrumento {
 -{field} nombre: String
 -{field} material: String
@@ -52,13 +55,21 @@ interface Sistema {
 }
 class SistemaImpl {
 +{field} instrumentos: ListaInstrumentos
++SistemaImpl()
++leerArchivoCsv():void
++menuPrincipal():void
++salir():void
++despliegueInstrumentoCodigo():void
++despliegueInstrumentosTipo():void
++despliegueInstrumentos():void
++obtenerInstrumentos():String[]
 }
-Sistema "1  " <|.. "1  " SistemaImpl
+Sistema "1  " <|.. "1  " SistemaImpl : implementa
 Cuerda  --|>  Instrumento
 Percusion  --|>  Instrumento
 Viento  --|>  Instrumento
 SistemaImpl "1" --> "1   " ListaInstrumentos : Administra
-Instrumento "*" --o "1" ListaInstrumentos : Almacena
+Instrumento "0..*" --o "1" ListaInstrumentos : Almacena
 
 
 @enduml
