@@ -8,7 +8,7 @@ public class Viento extends Instrumento{ //Hereda el abstract Instrumento
      * @param precio
      * @param stock
      */
-    public Viento(String nombre, String material, int codigo, int precio, int stock) {
+    public Viento(String nombre, String material, String codigo, int precio, int stock) {
         super(nombre, material, codigo, precio, stock);
     }
 

@@ -18,7 +18,7 @@ public class Percusion extends Instrumento{ //Hereda la clase Instrumento
      * @param percusion
      * @param altura
      */
-    public Percusion(String nombre, String material, int codigo, int precio, int stock, String percusion, String altura) {
+    public Percusion(String nombre, String material, String codigo, int precio, int stock, String percusion, String altura) {
         super(nombre, material, codigo, precio, stock);
         this.percusion = percusion;
         this.altura = altura;

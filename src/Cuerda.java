@@ -23,7 +23,7 @@ public class Cuerda extends Instrumento  { //Hereda el abstract Instrumento
      * @param numCuerdas
      * @param tipo
      */
-    public Cuerda(String nombre, String material, int codigo, int precio, int stock, String tipoCuerda, int numCuerdas, String tipo) {
+    public Cuerda(String nombre, String material, String codigo, int precio, int stock, String tipoCuerda, int numCuerdas, String tipo) {
         super(nombre, material, codigo, precio, stock);
         this.tipoCuerda = tipoCuerda;
         this.numCuerdas = numCuerdas;

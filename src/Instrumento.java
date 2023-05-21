@@ -10,7 +10,7 @@ abstract class Instrumento { //La clase madre
     /**
      * The codigo
      */
-    private int codigo;
+    private String codigo;
     /**
      * The precio
      */
@@ -28,7 +28,7 @@ abstract class Instrumento { //La clase madre
      * @param precio
      * @param stock
      */
-    public Instrumento(String nombre, String material, int codigo, int precio, int stock) {
+    public Instrumento(String nombre, String material, String codigo, int precio, int stock) {
         this.nombre = nombre;
         this.material = material;
         this.codigo = codigo;
@@ -53,7 +53,7 @@ abstract class Instrumento { //La clase madre
      *
      * @return the codigo
      */
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
     /**

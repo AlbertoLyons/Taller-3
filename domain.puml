@@ -1,0 +1,18 @@
+@startuml
+
+entity BeathTheRythm{
+Instrumentos
+}
+
+entity Instrumento{
+Nombre
+Material
+Codigo
+Precio
+Stock
+TipoInstrumento
+}
+
+BeathTheRythm "1" -> "0..*" Instrumento : posee
+
+@enduml

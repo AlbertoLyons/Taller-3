@@ -74,10 +74,10 @@ public class ListaInstrumentos {
      * @param codigo
      * @return
      */
-    public Instrumento obtenerInstrumentoCodigo(int codigo){
+    public Instrumento obtenerInstrumentoCodigo(String codigo){
 
         for (int i = 0; i < this.tamanio ; i++) {
-            if (this.listaInstrumentos[i].getCodigo() == codigo){
+            if (this.listaInstrumentos[i].getCodigo().equals(codigo)){
                 return this.listaInstrumentos[i];
             }
         }
