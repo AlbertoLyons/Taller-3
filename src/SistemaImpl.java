@@ -364,7 +364,7 @@ public class SistemaImpl implements Sistema{
             return;
         }
 
-        String mensaje = "no se acutaliza";
+        String mensaje = "No hay instrumentos";
 
         if (instrumentoAux instanceof Cuerda){
             mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Tipo de cuerda: "+((Cuerda) instrumentoAux).getTipoCuerda()+" | Cantidad de cuerdas: "+ ((Cuerda) instrumentoAux).getNumCuerdas()+" | Material: "+instrumentoAux.getMaterial()+" | Tipo de guitarra: "+((Cuerda) instrumentoAux).getTipo()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
@@ -374,6 +374,9 @@ public class SistemaImpl implements Sistema{
             mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Material: "+instrumentoAux.getMaterial()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
         }
 
+        if (mensaje.equals("No hay instrumentos")){
+            return;
+        }
         StdOut.println("* "+mensaje);
         StdOut.println("");
 
@@ -454,7 +457,7 @@ public class SistemaImpl implements Sistema{
         StdOut.println("");
 
         Instrumento instrumentoAux = instrumentos.obtenerInstrumento(codigo);
-        String mensaje = "no se acutaliza";
+        String mensaje = "No hay instrumentos";
 
         if (instrumentoAux instanceof Cuerda){
             mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Tipo de cuerda: "+((Cuerda) instrumentoAux).getTipoCuerda()+" | Cantidad de cuerdas: "+ ((Cuerda) instrumentoAux).getNumCuerdas()+" | Material: "+instrumentoAux.getMaterial()+" | Tipo de guitarra: "+((Cuerda) instrumentoAux).getTipo()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
@@ -464,9 +467,11 @@ public class SistemaImpl implements Sistema{
             mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Material: "+instrumentoAux.getMaterial()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
         }
 
+        if (mensaje.equals("No hay instrumentos")){
+            return;
+        }
         StdOut.println("* " + mensaje);
         StdOut.println("");
-
     }
 
     /**
