@@ -6,6 +6,5 @@ public class Main {
         SistemaImpl sistema = new SistemaImpl();
         sistema.leerArchivo();
         sistema.menuPrincipal();
-        
     }
 }

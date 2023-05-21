@@ -39,7 +39,7 @@ public class SistemaImpl implements Sistema{
                 instrumentoPorAgregar = new Cuerda(instrumento,materialConstruccion,codigo,precio,stock,tipoCuerda,numCuerdas,tipo);
                 this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
 
-            // Se verifica que tipo instrumento de Percusion es
+                // Se verifica que tipo instrumento de Percusion es
             } else if (instrumento.equalsIgnoreCase("Bongo") || instrumento.equalsIgnoreCase("Cajon") || instrumento.equalsIgnoreCase("Campanas Tubulares") || instrumento.equalsIgnoreCase("Bombo")) {
 
                 String tipoPercusion = regEntrada.getString();
@@ -49,7 +49,7 @@ public class SistemaImpl implements Sistema{
                 instrumentoPorAgregar = new Percusion(instrumento,materialConstruccion,codigo,precio,stock,tipoPercusion,altura);
                 this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
 
-            // Se verifica que tipo de instrumento de Viento es
+                // Se verifica que tipo de instrumento de Viento es
             } else if (instrumento.equalsIgnoreCase("Trompeta") || instrumento.equalsIgnoreCase("Saxofon") || instrumento.equalsIgnoreCase("Clarinete") || instrumento.equalsIgnoreCase("Flauta traversa")) {
 
                 String materialConstruccion = regEntrada.getString();
@@ -88,7 +88,10 @@ public class SistemaImpl implements Sistema{
                 case "1" -> this.agregarInstrumentoMenu();
                 case "2" -> this.venderInstrumento();
                 case "3" -> this.consultarInventario();
-                case "4" -> System.exit(0);
+                case "4" -> {
+                    StdOut.println("Cerrando sistema...");
+                    System.exit(0);
+                }
                 default -> StdOut.println("Opcion no valida, intente nuevamente");
             }
         }
@@ -101,7 +104,7 @@ public class SistemaImpl implements Sistema{
     public void agregarInstrumentoMenu() throws IOException {
 
         Instrumento instrumentoPorAgregar;
-
+        StdOut.println("");
         StdOut.print("""
                     [*] Seleccione el tipo de instrumento
                     
@@ -128,7 +131,7 @@ public class SistemaImpl implements Sistema{
                     codigo = Integer.parseInt(codigoString);
 
                     if (codigo <= 0){
-                        StdOut.println("El codigo no puede ser 0. Intentelo denuevo");
+                        StdOut.println("El codigo debe ser mayor a 0. Intentelo denuevo");
                         StdOut.println();
                     }else {
                         break;
@@ -209,7 +212,7 @@ public class SistemaImpl implements Sistema{
 
                                 if (numCuerdas <= 0) {
                                     StdOut.println("Ingrese un numero valido(que este sea mayor que 0).");
-                                    return;
+                                    StdOut.println("");
                                 }else {
                                     break;
                                 }
@@ -226,11 +229,11 @@ public class SistemaImpl implements Sistema{
                         // Se verifica si el material es Madera o Metal
                         if (tipoMaterial.equalsIgnoreCase("Madera") || tipoMaterial.equalsIgnoreCase("Metal")) {
 
-                            StdOut.print("Ingrese el tipo del instrumento (Acústico, Eléctrico): ");
+                            StdOut.print("Ingrese el tipo del instrumento (Acustico, Electrico): ");
                             String tipoInstrumento = StdIn.readString();
 
                             // Se verifica si el tipo de instrumento Cuerda es Acústico o Eléctrico
-                            if (tipoInstrumento.equalsIgnoreCase("Acústico") || tipoInstrumento.equalsIgnoreCase("Eléctrico")) {
+                            if (tipoInstrumento.equalsIgnoreCase("Acustico") || tipoInstrumento.equalsIgnoreCase("Electrico")) {
 
                                 /*
                                 Finalizando la consulta para el instrumento tipo Cuerda:
@@ -240,7 +243,6 @@ public class SistemaImpl implements Sistema{
                                  */
                                 instrumentoPorAgregar = new Cuerda(nombreInstrumentoCuerda, tipoMaterial, codigo, precio, stock, tipoCuerda, numCuerdas, tipoInstrumento);
                                 this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
-                                StdOut.println("Agregado con exito");
                             }
                         }
                     // Si no hubo algun tipo de material, se le avisa al usuario
@@ -280,7 +282,6 @@ public class SistemaImpl implements Sistema{
                             if (alturaPercusion.equalsIgnoreCase("Definida") || alturaPercusion.equalsIgnoreCase("Indefinida")) {
                                 instrumentoPorAgregar = new Percusion(nombreInstrumentoPercusion,tipoMaterial,codigo,precio,stock,nombreInstrumentoPercusion,alturaPercusion);
                                 this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
-                                StdOut.println("Agregado con exito");
                             }
                         }
                     }else {
@@ -307,7 +308,6 @@ public class SistemaImpl implements Sistema{
 
                         instrumentoPorAgregar = new Viento(nombreInstrumentoViento,materialInstrumento,codigo,precio,stock);
                         this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
-                        StdOut.println("Agregado con exito");
 
                     }else {
                         StdOut.println("El tipo de material ingresado no es valido. Intente agregar el instrumento nuevamente.");
@@ -381,7 +381,7 @@ public class SistemaImpl implements Sistema{
                     [*] Desea comprar el instrumento?
                     
                     [1] Si
-                    [2] No                
+                    [2] No             
                     
                     """);
 
@@ -389,7 +389,7 @@ public class SistemaImpl implements Sistema{
         while (true){
             try {
 
-                StdOut.print("Desea comprar el instrumento: ");
+                StdOut.print("Ingrese el numero correspondiente a su respuesta: ");
                 opcion = StdIn.readInt();
 
                 if (opcion <= 0 || opcion > 2){
@@ -451,10 +451,21 @@ public class SistemaImpl implements Sistema{
 
         StdOut.print("Ingrese el codigo del instrumento a buscar: ");
         int codigo = StdIn.readInt();
+        StdOut.println("");
 
-        Instrumento instrumentoADesplegar = instrumentos.obtenerInstrumentoCodigo(codigo);
-        String mensaje = instrumentoADesplegar.toString();
+        Instrumento instrumentoAux = instrumentos.obtenerInstrumento(codigo);
+        String mensaje = "no se acutaliza";
+
+        if (instrumentoAux instanceof Cuerda){
+            mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Tipo de cuerda: "+((Cuerda) instrumentoAux).getTipoCuerda()+" | Cantidad de cuerdas: "+ ((Cuerda) instrumentoAux).getNumCuerdas()+" | Material: "+instrumentoAux.getMaterial()+" | Tipo de guitarra: "+((Cuerda) instrumentoAux).getTipo()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
+        } else if (instrumentoAux instanceof Percusion) {
+            mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Tipo de percusion: "+((Percusion) instrumentoAux).getPercusion()+" | Material: "+instrumentoAux.getMaterial()+" | Tipo de altura: "+((Percusion) instrumentoAux).getAltura()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
+        } else if (instrumentoAux instanceof Viento) {
+            mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Material: "+instrumentoAux.getMaterial()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
+        }
+
         StdOut.println("* " + mensaje);
+        StdOut.println("");
 
     }
 
@@ -479,8 +490,8 @@ public class SistemaImpl implements Sistema{
         if (tipoInstrumento.equalsIgnoreCase("Cuerda")){
             for (int i = 0; i < this.instrumentos.getTamanio() ; i++) {
                 if (instrumentos.obtenerInstrumento(i) instanceof Cuerda){
-                    Instrumento instrumentoADesplegar = instrumentos.obtenerInstrumento(i);
-                    String mensaje = instrumentoADesplegar.toString();
+                    Instrumento instrumentoAux = instrumentos.obtenerInstrumento(i);
+                    String mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Tipo de cuerda: "+((Cuerda) instrumentoAux).getTipoCuerda()+" | Cantidad de cuerdas: "+ ((Cuerda) instrumentoAux).getNumCuerdas()+" | Material: "+instrumentoAux.getMaterial()+" | Tipo de guitarra: "+((Cuerda) instrumentoAux).getTipo()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
                     StdOut.println("* " + mensaje);
                 }
             }
@@ -488,8 +499,8 @@ public class SistemaImpl implements Sistema{
         } else if (tipoInstrumento.equalsIgnoreCase("Percusion")) {
             for (int i = 0; i < this.listaInstrumentosImpl.length ; i++) {
                 if (instrumentos.obtenerInstrumento(i) instanceof Percusion){
-                    Instrumento instrumentoADesplegar = instrumentos.obtenerInstrumento(i);
-                    String mensaje = instrumentoADesplegar.toString();
+                    Instrumento instrumentoAux = instrumentos.obtenerInstrumento(i);
+                    String mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Tipo de percusion: "+((Percusion) instrumentoAux).getPercusion()+" | Material: "+instrumentoAux.getMaterial()+" | Tipo de altura: "+((Percusion) instrumentoAux).getAltura()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
                     StdOut.println("* " + mensaje);
                 }
             }
@@ -497,11 +508,12 @@ public class SistemaImpl implements Sistema{
         } else if (tipoInstrumento.equalsIgnoreCase("Viento")) {
             for (int i = 0; i < this.listaInstrumentosImpl.length ; i++) {
                 if (instrumentos.obtenerInstrumento(i) instanceof Viento){
-                    Instrumento instrumentoADesplegar = instrumentos.obtenerInstrumento(i);
-                    String mensaje = instrumentoADesplegar.toString();
+                    Instrumento instrumentoAux = instrumentos.obtenerInstrumento(i);
+                    String mensaje = ("Instrumento: "+instrumentoAux.getNombre()+" | Codigo: "+instrumentoAux.getCodigo()+" | Material: "+instrumentoAux.getMaterial()+" | Stock: "+instrumentoAux.getStock()+" | Precio: "+instrumentoAux.getPrecio());
                     StdOut.println("* " + mensaje);
                 }
             }
+            StdOut.println("");
         } else {
             StdOut.println("El tipo de instrumento ingresado no es valido.");
         }

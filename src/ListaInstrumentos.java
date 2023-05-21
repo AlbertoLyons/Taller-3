@@ -36,6 +36,20 @@ public class ListaInstrumentos {
             StdOut.println("No se pueden almacenar mas intrumentos!");
             return;
         }
+
+        // Validamos si el codigo ya existe y creamos una variable que nos indicara esto.
+        boolean existe = false;
+        for (int i = 0; i < this.tamanio ; i++) {
+            if (listaInstrumentos[i].getCodigo() == instrumento.getCodigo()){
+                existe = true;
+            }
+        }
+        // Si existe es verdadero no agregamos el instrumento.
+        if (existe){
+            StdOut.println("Ya existe un instrumento con el codigo "+ instrumento.getCodigo());
+            return;
+        }
+
         // Si pasa la validacion se agrega el instrumento y se incrementa el tamanio.
         this.listaInstrumentos[this.tamanio] = instrumento;
         tamanio++;
@@ -78,7 +92,7 @@ public class ListaInstrumentos {
      */
     public int buscarInstrumento(Instrumento instrumento) {
         // Busca la posicion dentro de la lista.
-        for (int i = 0;i < max;i++) {
+        for (int i = 0;i < this.tamanio;i++) {
 
             // Si encuentra la posicion del instrumento retorna el valor de este.
             if (this.listaInstrumentos[i] == instrumento) {
