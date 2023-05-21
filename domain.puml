@@ -4,6 +4,10 @@ entity BeathTheRythm{
 Instrumentos
 }
 
+entity SistemaInventario{
+Interfaz
+}
+
 entity Instrumento{
 Nombre
 Material
@@ -13,6 +17,7 @@ Stock
 TipoInstrumento
 }
 
-BeathTheRythm "1" -> "0..*" Instrumento : posee
-
+BeathTheRythm "1" -> "0..*      " Instrumento : posee
+BeathTheRythm -> SistemaInventario: tiene
+SistemaInventario "1" -> "0..*" Instrumento : administra
 @enduml
