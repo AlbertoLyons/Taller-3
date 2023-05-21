@@ -2,46 +2,56 @@
 abstract Instrumento {
 -{field} nombre: String
 -{field} material: String
-+{method} Instrumento(nombre: String, material: String)
+-{field} codigo: String
+-{field} precio: int
+-{field} stock: int
++{method} Instrumento(nombre: String, material: String, codigo: String,\nprecio: int, stock: int)
 +{method} getNombre(): String
 +{method} getMaterial(): String
++{method} getCodigo(): String
++{method} getPrecio(): int
++{method} getStock(): int
++{method} setStock(stock: int): void
 }
 class Cuerda {
 -{field} tipoCuerda: String
 -{field} numCuerdas: int
 -{field} tipo: String
-+{method} Cuerda(nombre: String, material, String,\ntipoCuerda: String, numCcuerdas: int,\ntipo: String)
++{method} Cuerda(nombre: String, material, String, codigo: String\nprecio: int, stock: int\ntipoCuerda: String, numCcuerdas: int,\ntipo: String)
 +{method} getTipoCuerda(): String
 +{method} getNumCuerdas(): int
 +{method} getTipo(): String
 }
 class Percusion {
--{field} tipoPercusion: String
--{field} altura: float
-+{method} Percusion(nombre: String, material: String,\ntipoPercusion: String, altura: float)
+-{field} percusion: String
+-{field} altura: String
++{method} Percusion(nombre: String, material: String\ncodigo: String, precio: int, stock: int\npercusion: String, altura: String)
 +{method} getTipoPercusion(): String
-+{method} getAltura(): float
++{method} getAltura(): String
 }
 class Viento {
-+{method} Viento(nombre: String, material: String)
++{method} Viento(nombre: String, material: String, codigo: String, precio: int. stock: int)
 }
 class ListaInstrumentos {
 -{field} max: int
 -{field} tamanio: int
--{field} Instrumento ListaInstrumentos[]
+-{field} Instrumento listaInstrumentos[]
 +{method} ListaInstrumentos(max: int)
-+{method} agregarInstrumento(Instrumento instrumento)
-+{method} buscarInstrumento(Instrumento instrumento)
-+{method} eliminarInstrumento(Instrumento instrumento)
++{method} obtenerInstrumento(posicion: int): Instrumento
++{method} obtenerInstrumentoCodigo(codigo: String): Instrumento
++{method} agregarInstrumento(Instrumento instrumento): void
++{method} buscarInstrumento(Instrumento instrumento): int
++{method} eliminarInstrumento(Instrumento instrumento): boolean
++{method} getTamanio(): int
 }
 interface Sistema {
-+{field} menuPrincipal(): void
-+{field} agregarInstrumento(): void
++{field} agregarInstrumentoMenu(): void
 +{field} venderInstrumento(): void
 +{field} consultarInventario(): void
++{field} salir(): void
 }
 class SistemaImpl {
-+{field}listaInstrumentosImpl: ListaInstrumentos
++{field} instrumentos: ListaInstrumentos
 }
 Sistema "1  " <|.. "1  " SistemaImpl
 Cuerda  --|>  Instrumento

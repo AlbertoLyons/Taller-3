@@ -116,10 +116,7 @@ public class SistemaImpl implements Sistema{
                 case "1" -> this.agregarInstrumentoMenu();
                 case "2" -> this.venderInstrumento();
                 case "3" -> this.consultarInventario();
-                case "4" -> {
-                    StdOut.println("Cerrando sistema...");
-                    System.exit(0);
-                }
+                case "4" -> salir();
                 default -> StdOut.println("Opcion no valida, intente nuevamente");
             }
         }
@@ -252,6 +249,7 @@ public class SistemaImpl implements Sistema{
                                  */
                                 instrumentoPorAgregar = new Cuerda(nombreInstrumentoCuerda, tipoMaterial, codigo, precio, stock, tipoCuerda, numCuerdas, tipoInstrumento);
                                 this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
+                                StdOut.println("Instrumento agregado con exito!");
                             }
                         }
                     // Si el tipo de material era distinto de los especificados, se le avisa al usuario.
@@ -291,6 +289,7 @@ public class SistemaImpl implements Sistema{
                             if (alturaPercusion.equalsIgnoreCase("Definida") || alturaPercusion.equalsIgnoreCase("Indefinida")) {
                                 instrumentoPorAgregar = new Percusion(nombreInstrumentoPercusion,tipoMaterial,codigo,precio,stock,nombreInstrumentoPercusion,alturaPercusion);
                                 this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
+                                StdOut.println("Instrumento agregado con exito!");
                             }
                         }
                     // Si el tipo de percusion es distinto de los especificados, se le avisa al usuario.
@@ -318,6 +317,7 @@ public class SistemaImpl implements Sistema{
 
                         instrumentoPorAgregar = new Viento(nombreInstrumentoViento,materialInstrumento,codigo,precio,stock);
                         this.instrumentos.agregarInstrumento(instrumentoPorAgregar);
+                        StdOut.println("Instrumento agregado con exito!");
                     // Si el tipo de material es distinto de los especificados, se le avisa al usuario.
                     }else {
                         StdOut.println("El tipo de material ingresado no es valido. Intente agregar el instrumento nuevamente.");
@@ -455,6 +455,16 @@ public class SistemaImpl implements Sistema{
             case "3" -> this.despliegueInstrumentos();
             default -> StdOut.println("La opcion ingresada no es valida.");
         }
+    }
+
+    @Override
+    /**
+     * Se sale del sistema finalizando el programa
+     */
+    public void salir() {
+        StdOut.println("Cerrando sistema...");
+        System.exit(0);
+
     }
 
     /**
